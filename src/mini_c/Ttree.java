@@ -114,8 +114,10 @@ class Decl_var {
 
 abstract class Expr {
 	public Typ typ; // chaque expression est décorée par son type
-
+	
 	abstract void accept(Visitor v);
+	
+	
 }
 
 class Econst extends Expr {
@@ -128,6 +130,11 @@ class Econst extends Expr {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	//US
+	public String toString() {
+		return "Econst: "+this.i; 
+	}
+	//
 }
 
 class Eaccess_local extends Expr {
@@ -140,6 +147,11 @@ class Eaccess_local extends Expr {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	//US
+		public String toString() {
+			return "Eaccess_local: "+this.i; 
+		}
+	//
 }
 
 class Eaccess_field extends Expr {
@@ -154,6 +166,11 @@ class Eaccess_field extends Expr {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	//US
+	public String toString() {
+				return "Eaccess_field: "+this.e; 
+	}
+	//
 }
 
 class Eassign_local extends Expr {
@@ -168,6 +185,12 @@ class Eassign_local extends Expr {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	
+	//US
+			public String toString() {
+				return "Eassign_local: "+this.i +" "+this.e; 
+			}
+		//
 }
 
 class Eassign_field extends Expr {
@@ -184,6 +207,11 @@ class Eassign_field extends Expr {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	//US
+	public String toString() {
+		return "Eassign_field: "+this.e1 +" "+this.e2; 
+	}
+//
 }
 
 class Eunop extends Expr {
@@ -198,6 +226,11 @@ class Eunop extends Expr {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	//US
+		public String toString() {
+	return "Eunop: "+this.e; 
+		}
+		//
 }
 
 class Ebinop extends Expr {
@@ -214,6 +247,11 @@ class Ebinop extends Expr {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	//US
+			public String toString() {
+		return "Ebinop: "+this.e1 +" "+ this.b+" "+ " "+ this.e2; 
+			}
+			//
 }
 
 class Ecall extends Expr {
@@ -358,6 +396,40 @@ class File {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	public String toString() {
+		String res = "Number of functions " + this.funs.size() + "\n"; 
+		
+        for(Decl_fun d: this.funs) {
+        	res += "fun_type: "+d.fun_typ+"\n" ; 
+        	res+="fun_name: "+d.fun_name+"\n" ; 
+        	for (Decl_var dd: d.fun_formals){
+        		res+="var_type, var_name: "+dd.t + ", "+dd.name+"\n" ; 
+        	}
+        	if(d.fun_body instanceof Sblock) {
+        		Sblock tmp = (Sblock)d.fun_body; 
+        		//System.out.println(); 
+        		res+= "Deb Sblock"+"\n" ; 
+        		for (Decl_var dd: tmp.dl){
+            		res+="var_type, var_name: "+dd.t + ", "+dd.name+"\n"; 
+            	}
+        		for(Stmt sl: tmp.sl) {
+        			if(sl instanceof Sreturn) {
+        				res+="Sreturn : "+((Sreturn)sl).e+"\n"; 
+        			}
+        			else {
+        				res+="sl not instance of Sretrun"+"\n"; 
+        			}
+        		}
+        		res+="Fin Sblock"+"\n"; 
+        	}
+        	else {
+        		res+="fun_body not instance of sblock"+"\n"; 
+        	}
+        	System.out.println(); 
+        }
+        return res; 
+	}
+	
 }
 
 interface Visitor {
@@ -503,3 +575,5 @@ class EmptyVisitor implements Visitor {
 	public void visit(File n) {
 	}
 }
+
+
