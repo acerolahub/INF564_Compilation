@@ -39,36 +39,10 @@ public class Main {
             typer.visit(f);
             File tf = typer.getFile();
             
+           System.out.println(tf);  
             
             
-            
-            System.out.println(tf.funs.size());
-            for(Decl_fun d: tf.funs) {
-            	System.out.println("fun_type: "+d.fun_typ); 
-            	System.out.println("fun_name: "+d.fun_name); 
-            	for (Decl_var dd: d.fun_formals){
-            		System.out.println("var_type, var_name: "+dd.t + ", "+dd.name); 
-            	}
-            	if(d.fun_body instanceof Sblock) {
-            		Sblock tmp = (Sblock)d.fun_body; 
-            		System.out.println("Deb Sblock"); 
-            		for (Decl_var dd: tmp.dl){
-                		System.out.println("var_type, var_name: "+dd.t + ", "+dd.name); 
-                	}
-            		for(Stmt sl: tmp.sl) {
-            			if(sl instanceof Sreturn) {
-            				System.out.println("Sreturn : "+((Sreturn)sl).e); 
-            			}
-            			else {
-            				System.out.println("sl not instance of Sretrun"); 
-            			}
-            		}
-            		System.out.println("Fin Sblock"); 
-            	}
-            	else {
-            		System.out.println("fun_body not instance of sblock"); 
-            	}
-            	System.out.println(); 
+           
             }
             
             
