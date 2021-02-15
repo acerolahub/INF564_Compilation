@@ -39,12 +39,10 @@ public class Main {
             typer.visit(f);
             File tf = typer.getFile();
             
-           System.out.println(tf);  
             
             
-           
-            }
             
+            System.out.println(tf); 
             
             
             
