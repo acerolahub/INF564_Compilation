@@ -249,7 +249,7 @@ class Ebinop extends Expr {
 	}
 	//US
 			public String toString() {
-		return "Ebinop: "+this.e1 +" "+ this.b+" "+ " "+ this.e2; 
+		return "(Ebinop: "+this.e1 +" "+ this.b+" "+ " "+ this.e2+")"; 
 			}
 			//
 }
@@ -321,6 +321,10 @@ class Sif extends Stmt {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	public String toString() {
+		return "(Sif: "+this.e + " S1: "+ this.s1+"; S2: "+ " "+ this.s2+")"; 
+	}
+	
 }
 
 class Swhile extends Stmt {
@@ -348,6 +352,22 @@ class Sblock extends Stmt {
 
 	void accept(Visitor v) {
 		v.visit(this);
+	}
+	public String toString() {
+		String res; 
+		res= "Sblock: \n"; 
+		res+="Decl_var: \n"; 
+		for(Decl_var d: dl) {
+			res+=d.toString() + "\n"; 
+		}
+		
+		res+="Stmt: \n"; 
+		for(Stmt s: sl) {
+			res+=s.toString() + "\n";
+		}
+		res+="Sblock fin;\n"; 
+		
+		return res; 
 	}
 }
 
@@ -416,8 +436,15 @@ class File {
         			if(sl instanceof Sreturn) {
         				res+="Sreturn : "+((Sreturn)sl).e+"\n"; 
         			}
+        			else if(sl instanceof Sif) {
+        				res+="Sif: "+((Sif)sl).e+"\n"; 
+        				res+="S1: "+((Sif)sl).s1+"\n"; 
+        				res+="S2: "+((Sif)sl).s2+"\n"; 
+        				res+= "Fin Si\n";
+        			}
+        			
         			else {
-        				res+="sl not instance of Sretrun"+"\n"; 
+        				res+="sl not instance of Sretrun or Sif"+"\n"; 
         			}
         		}
         		res+="Fin Sblock"+"\n"; 
