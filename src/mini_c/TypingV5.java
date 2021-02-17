@@ -442,12 +442,9 @@ public class Typing implements Pvisitor {
 		System.out.println("llllllll ");
 		
 		//System.out.println("llllllll " + stack_addr_stmt.pop());
-		/*
-		bb = new Sblock(new LinkedList<>(), new LinkedList<>()); 
-		stack_addr_block.push(bb); 
-		this.visit(n.s2); 
-		((Sif)b.sl.getLast()).s2 = stack_addr_block.pop();
-		*/
+		stack_addr_stmt.push(null); 
+		this.visit(n.s2);
+		((Sif)b.sl.getLast()).s2 = stack_addr_stmt.pop();
 		System.out.println("Pif fin"); 
 	}
 
