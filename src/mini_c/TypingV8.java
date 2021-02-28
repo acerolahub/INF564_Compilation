@@ -13,7 +13,7 @@ public class Typing implements Pvisitor {
 	
 	private int nb_args; 
 	private int cursor = 0;
-	final private static int IDENT_DECL= 0, IDENT_PBLOC = 1, IDENT_SRETURN = 2, IDENT_SIF = 3, IDENT_PEVAL = 4, IDENT_PASSIGN=5, IDENT_PCALL=6;
+	final private static int IDENT_DECL= 0, IDENT_PBLOC = 1, IDENT_SRETURN = 2, IDENT_SIF = 3, IDENT_PEVAL = 4, IDENT_PASSIGN=5;
 	private int ident_block = 0;
 	//Expr 
 	final private static int IDENT_ECONST=0, IDENT_EACCES_LOCAL=1, IDENT_EACCES_FIELS=2, IDENT_EASSIGN_LOCAL = 3, 
@@ -48,6 +48,10 @@ public class Typing implements Pvisitor {
 			throw new Error("typing not yet done!");
 		return file;
 	}
+	
+	public void nop() {
+		System.out.println("NOPEEEEEEEEEEEEEEEEEEEEEE " + stack_addr_expr.pop());
+	}
 
 	// il faut compléter le visiteur ci-dessous pour réaliser le typage
 
@@ -78,13 +82,6 @@ public class Typing implements Pvisitor {
 		// TODO Auto-generated method stub
 		
 		System.out.println("Ptint deb "+func); 
-		/*if(func == 0) {
-			System.out.println("laa"); 
-			Sblock b = stack_addr_block.pop(); 
-			b.dl.add(new Decl_var(new Tint(), null)); 
-			stack_addr_block.push(b); 
-		}
-		else {*/
 		if(stack_struct.peek()==0) {
 			if(cursor==0)
 				file.funs.add(new Decl_fun(new Tint(), null, null, null));
@@ -92,20 +89,16 @@ public class Typing implements Pvisitor {
 				file.funs.getLast().fun_formals.add(new Decl_var(new Tint(), null)); 
 			}
 			else {
-				System.out.println("la"); 
-				Sblock b = stack_addr_block.pop(); 
-				System.out.println("b = "+b); 
+
+				Sblock b = stack_addr_block.pop();  
 				b.dl.add(new Decl_var(new Tint(), null)); 
 				stack_addr_block.push(b); 
 			}
 		}
 		else if(stack_struct.peek()==STRUCT_FIELD) {
-			System.out.println("yeah");
-			//structure.getLast().fields.put(null, new Field(null, new Tint()));
 			type_field = ENTIER;
 		}
 		System.out.println("Ptint Fin"); 
-	//}
 	}
 
 	@Override
@@ -144,15 +137,15 @@ public class Typing implements Pvisitor {
 					file.funs.getLast().fun_formals.add(new Decl_var(new Tstructp(s), null)); 
 			}
 			else {
-				System.out.println("la"); 
+				 
 				Sblock b = stack_addr_block.pop(); 
-				System.out.println("b = "+b); 
+				 
 				b.dl.add(new Decl_var(new Tstructp( structure.get(n.id)), null)); 
 				stack_addr_block.push(b); 
 			}
 		}
 		else if(stack_struct.peek()==STRUCT_FIELD) {
-			System.out.println("yeah");
+
 			//structure.getLast().fields.put(null, new Field(null, new Tint()));
 			type_field = ENTIER;
 		}
@@ -172,8 +165,6 @@ public class Typing implements Pvisitor {
 		catch(EmptyStackException e) {
 			ident_expr = IDENT_ECONST; 
 		}
-		System.out.println("ident_expr : "+ident_expr); 
-		System.out.println("ident_block : "+ident_block); 
 		switch(ident_block) {
 		
 		case IDENT_SIF:
@@ -190,7 +181,7 @@ public class Typing implements Pvisitor {
 			case IDENT_EUNOP:
 			case IDENT_EBINOP: 
 				//si première expression du binop
-				System.out.println("addr size "+ stack_addr_expr.size());
+
 				/*
 				if(cursor_binop==0) {
 					tmp = stack_addr_expr.pop();  
@@ -213,10 +204,10 @@ public class Typing implements Pvisitor {
 				}*/
 				
 				tmp = stack_addr_expr.pop();  
-				System.out.println("before add "+ tmp);
+
 				tmp = new Econst(n.n);
 				stack_addr_expr.push(tmp); 
-				System.out.println("after add "+ tmp);
+
 				break; 
 				
 			default:
@@ -230,7 +221,7 @@ public class Typing implements Pvisitor {
 			case IDENT_EUNOP:
 			case IDENT_EBINOP: 
 				//si première expression du binop
-				System.out.println("addr size "+ stack_addr_expr.size());
+
 				/*
 				if(cursor_binop==0) {
 					tmp = stack_addr_expr.pop();  
@@ -252,11 +243,11 @@ public class Typing implements Pvisitor {
 					System.out.println("Bad value of cursor_binop: "+cursor_binop + " "  + n.loc); 
 				}*/
 				
-				tmp = stack_addr_expr.pop();  
-				System.out.println("before add "+ tmp);
+				//tmp = stack_addr_expr.pop();  
+
 				tmp = new Econst(n.n);
 				stack_addr_expr.push(tmp); 
-				System.out.println("after add "+ tmp);
+
 				break; 
 				
 			default:
@@ -266,48 +257,26 @@ public class Typing implements Pvisitor {
 			break;
 		
 		case IDENT_PEVAL:
-			System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
-			switch(ident_expr) {
-				case IDENT_PASSIGN:
-					//System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
-					tmp = stack_addr_expr.pop();  
-					System.out.println("before add "+ tmp);
-					((Eassign_local)tmp).e = new Econst(n.n);
-					stack_addr_expr.push(tmp);
-					System.out.println("after add "+ tmp);
-					break;
-				case IDENT_PCALL:
-					System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
-					/*
-					tmp = stack_addr_expr.pop();  
-					System.out.println("before add "+ tmp);
-					tmp = new Econst(n.n);
-					stack_addr_expr.push(tmp); 
-					System.out.println("after add "+ tmp);
-					
-					*/
-					
-					tmp = stack_addr_expr.peek();
-					if(tmp instanceof Ecall) {
-						//((Ecall)tmp).el.add(new Econst(n.n));
-						stack_addr_expr.push(new Econst(n.n));
-						
-					}
-					else if(tmp instanceof Ebinop) {
-						tmp = stack_addr_expr.pop();
-						System.out.print("BBBBBBBBBBBBBBBBBBBBBBBB\n");
-						if(cursor_binop==0)
-							((Ebinop)tmp).e1 = new Econst(n.n);
-						else
-							((Ebinop)tmp).e2 = new Econst(n.n);
-						stack_addr_expr.push(tmp);
-						System.out.print("BBBBBBBBBBBBBBBBBBBBBBBB\n");
-					}
-					break;
-				default:
-					throw new Error("visit Pint ident_sblock "+n.loc);
+			if(ident_expr==IDENT_PASSIGN) {
+				tmp = stack_addr_expr.pop();  
+
+				((Eassign_local)tmp).e = new Econst(n.n);
+				stack_addr_expr.push(tmp);
 			}
-			
+			else if(ident_expr==IDENT_EBINOP) {
+				//tmp = stack_addr_expr.pop();  
+
+				tmp = new Econst(n.n);
+				stack_addr_expr.push(tmp);
+			}
+			else if(ident_expr==IDENT_ECALL) {  
+				
+				tmp = new Econst(n.n);
+				stack_addr_expr.push(tmp);
+			}
+			else {
+				throw new Error("visit Pint ident_sblock "+n.loc);
+			}
 			break;
 		default:
 			//((Sreturn)((Sblock)file.funs.getLast().fun_body).sl.getLast()).e = new Econst(n.n); 
@@ -322,10 +291,8 @@ public class Typing implements Pvisitor {
 		// TODO Auto-generated method stub
 		System.out.println("Pident Deb");
 		Expr tmp;
-		System.out.println("Yosh" + stack_struct.peek());
+
 		if(stack_struct.peek()==0) {
-			System.out.println(" stack size "+stack_block.size()); 
-			System.out.println("cursor = "+ cursor); 
 			
 			if(cursor==0 && stack_struct.peek()==0) {
 				for(Decl_fun funs : file.funs) {
@@ -353,7 +320,7 @@ public class Typing implements Pvisitor {
 				}
 				catch(EmptyStackException e) {
 					//ident_block = stack_block.peek();  
-					System.out.println("catch");
+
 				}
 				
 				try{
@@ -363,7 +330,7 @@ public class Typing implements Pvisitor {
 					ident_expr = IDENT_EACCES_LOCAL; 
 				}
 				
-				System.out.println(""+ident_block);
+
 				
 				switch(ident_block) {
 					case IDENT_DECL:
@@ -390,10 +357,10 @@ public class Typing implements Pvisitor {
 							//si première expression du binop
 							
 							tmp = stack_addr_expr.pop();  
-							System.out.println("before add "+ tmp);
+
 							tmp = new Eaccess_local(n.id);
 							stack_addr_expr.push(tmp); 
-							System.out.println("after add "+ tmp);
+
 							break; 
 						
 						default:
@@ -410,10 +377,10 @@ public class Typing implements Pvisitor {
 								//si première expression du binop
 								
 								tmp = stack_addr_expr.pop();  
-								System.out.println("before add "+ tmp);
+
 								tmp = new Eaccess_local(n.id);
 								stack_addr_expr.push(tmp); 
-								System.out.println("after add "+ tmp);
+
 								break; 
 							
 							default:
@@ -429,7 +396,7 @@ public class Typing implements Pvisitor {
 								((Eassign_local)tmp).i = n.id;
 								stack_addr_expr.push(tmp);
 								break;
-							case IDENT_PCALL:
+							case IDENT_ECALL:
 								Sblock temp = stack_addr_block.peek();
 								int present = 0;
 								if(temp != null) {
@@ -450,13 +417,13 @@ public class Typing implements Pvisitor {
 								}
 								else if(tmp instanceof Ebinop) {
 									tmp = stack_addr_expr.pop();
-									System.out.print("BBBBBBBBBBBBBBBBBBBBBBBB\n");
+
 									if(cursor_binop==0)
 										((Ebinop)tmp).e1 = new Eaccess_local(n.id);
 									else
 										((Ebinop)tmp).e2 = new Eaccess_local(n.id);
 									stack_addr_expr.push(tmp);
-									System.out.print("BBBBBBBBBBBBBBBBBBBBBBBB\n");
+
 								}
 								break;
 							default:
@@ -478,11 +445,11 @@ public class Typing implements Pvisitor {
 				throw new Error("redefinition of variable at location " + n.loc);
 			if(type_field == ENTIER)
 				structure.get(name_struct).fields.put(n.id, new Field(n.id, new Tint()));
-			System.out.println("Ola, ici ici ici");
+
 		}
 		else if(stack_struct.peek()==STRUCT_VARNAME) {
 			Sblock b = stack_addr_block.pop(); 
-			System.out.println("b = "+b);
+
 			b.dl.getLast().name = n.id;
 			stack_addr_block.push(b);
 		}
@@ -522,10 +489,8 @@ public class Typing implements Pvisitor {
 		System.out.println("Passign Deb"); 
 		stack_expr.push(IDENT_PASSIGN); 
 		ident_block = stack_block.peek();
-		System.out.println(ident_block);
+
 		Expr e = stack_addr_expr.pop();
-		System.out.println(e);
-		System.out.println("AAAAAAAAAAAAAAAAAA");
 		if(e==null) {
 			e = new Eassign_local(null, null);
 			stack_addr_expr.push(e);
@@ -570,100 +535,54 @@ public class Typing implements Pvisitor {
 			throw new Error("incompatible type");
 			
 		
-		stack_expr.push(IDENT_EBINOP); 
+		stack_expr.push(IDENT_EBINOP);
 		ident_block = stack_block.peek();
-		Expr e = stack_addr_expr.pop(); 
+		Expr e; 
 		cursor_binop = 0;
 		switch(ident_block)	{
-		case IDENT_SRETURN: 
-			if(e instanceof Ecall) {
-				stack_addr_expr.push(e);
-				System.out.println("YYYYYYYYYYYYYYYYYYYYYY\n\n"+e+"\n");
-				 e = new Ebinop(n.op, null, null); 
+			case IDENT_SRETURN:	
+				e = new Ebinop(n.op, null, null); 
 				 stack_addr_expr.push(e); 
-				 System.out.println("YYYYYYYYYYYYYYYYYYYYYY\n\n"+stack_addr_expr.peek()+"\n");
-				 //System.out.println("e = "+e);
-				 //System.out.println(stack_addr_expr.size()); 
-				 stack_addr_expr.push(((Ebinop)e).e1); 
+				 System.out.println("e1 = "+n.e1);
+				 System.out.println("e1 = "+n.e2);
+				 
+				 
+				 this.visit(n.e1);
+				 
+				 
+				 
+				 ((Ebinop)e).e1 = stack_addr_expr.pop(); 
+				 cursor_binop = 1; 
+				 this.visit(n.e2);
+				 
+				 ((Ebinop)e).e2 = stack_addr_expr.pop();
+				 
+				 
+				break;
+			case IDENT_PEVAL:
+				e = new Ebinop(n.op, null, null); 
+				 stack_addr_expr.push(e); 
+				 //System.out.println("e1 = "+n.e1);
+				 //System.out.println("e1 = "+n.e2);
+				 //stack_addr_expr.push(((Ebinop)e).e1);
+				 
+				 
 				 this.visit(n.e1);
 				 
 				 ((Ebinop)e).e1 = stack_addr_expr.pop(); 
 				 cursor_binop = 1; 
-				 stack_addr_expr.push(((Ebinop)e).e2); 
+				 //stack_addr_expr.push(((Ebinop)e).e2); 
 				 this.visit(n.e2);
-				 ((Ebinop)e).e2 = stack_addr_expr.pop(); 
-			}
-			else {
-				System.out.println("YYYYYYYYYYYYYYYYYYYYYY\n\n"+e+"\n");
-				e = new Ebinop(n.op, null, null); 
-				stack_addr_expr.push(e); 
-				System.out.println("YYYYYYYYYYYYYYYYYYYYYY\n\n"+stack_addr_expr.peek()+"\n");
-				 //System.out.println("e = "+e);
-				 //System.out.println(stack_addr_expr.size()); 
-				stack_addr_expr.push(((Ebinop)e).e1); 
-				this.visit(n.e1);
 				 
-				((Ebinop)e).e1 = stack_addr_expr.pop(); 
-				cursor_binop = 1; 
-				stack_addr_expr.push(((Ebinop)e).e2); 
-				this.visit(n.e2);
-				((Ebinop)e).e2 = stack_addr_expr.pop(); 
-				stack_addr_expr.push(e);
-				System.out.println("AAAAAAAAAAAAAAAAAAAAAAA\n\n"+e+"\n");
-			}
-			 
-			  
-			break;
-		case IDENT_PEVAL:
-			stack_addr_expr.push(e);
-			stack_expr.pop();
-			switch(stack_expr.peek()) {
-				case IDENT_PCALL:
-					System.out.println("eeeeeeeeeeeeeeeeeee"+stack_addr_expr.peek());
-					Expr tmp = stack_addr_expr.peek();
-					if(tmp instanceof Ecall) {
-						cursor_binop = 0;
-						e = new Ebinop(n.op, null, null);
-						stack_addr_expr.push(e); 					
-						this.visit(n.e1);
-						cursor_binop = 1; 
-						this.visit(n.e2);
-					}
-					else if(tmp instanceof Ebinop) {
-						
-						e = new Ebinop(n.op, null, null);
-						stack_addr_expr.push(e);				
-						this.visit(n.e1);
-						cursor_binop = 1; 
-						this.visit(n.e2);
-						
-						System.out.print("BBBBBBBBBBBBBBBBBBBBBBBB\n");
-						e = stack_addr_expr.pop();
-						tmp = stack_addr_expr.pop();
-						if(cursor_binop==0) {
-							
-							((Ebinop)tmp).e1 = e;
-						}
-						else
-							((Ebinop)tmp).e2 = e;
-						stack_addr_expr.push(tmp);
-						System.out.print("BBBBBBBBBBBBBBBBBBBBBBBB\n");
-					}
-					break;
-				default:
-					
-					throw new Error("visit Pident "+n.loc);
-			}
-			stack_expr.push(IDENT_EBINOP);
-			break;
-		
-		default:
-			throw new Error("visit Pbinop "+n.loc);
-		}
-		
-		
-		//stack_addr_expr.pop(); 
-		System.out.println("Binop Fin"); 
+				 ((Ebinop)e).e2 = stack_addr_expr.pop();
+				 break;
+				 
+			default:
+				throw new Error("visit Pbinop "+n.loc);
+			}			
+			
+			//stack_addr_expr.pop(); 
+			System.out.println("Binop Fin"); 
 		
 	}
 
@@ -692,161 +611,23 @@ public class Typing implements Pvisitor {
 			throw new Error("bad arguments number");
 		else {
 			Expr e;
+			stack_block.push(IDENT_PEVAL);
+			stack_expr.push(IDENT_ECALL);
+			e = new Ecall(n.f, new LinkedList<>());
+			stack_addr_expr.push(e);
 			
-			ident_block = stack_block.peek(); 
-			try{
-				ident_expr = stack_expr.peek();
+			for(int i=0; i<taille; i++) {
+				Pexpr vars = n.l.get(i);
+				//stack_addr_expr.push(null);
+				this.visit(vars);
+//				nop();nop();
+				e = stack_addr_expr.pop();
+				Expr t = stack_addr_expr.pop();
+				((Ecall)t).el.add(e);
+				stack_addr_expr.push(t);
 			}
-			catch(EmptyStackException error) {
-				stack_expr.push(IDENT_PCALL);
-				ident_expr = IDENT_PCALL;
-			}
-			System.out.println("ident_expr : "+ident_expr); 
-			System.out.println("ident_block : "+ident_block);
-			System.out.println("Here " + stack_addr_expr.peek()+"\n\n\n\n");
-			if(ident_block==IDENT_PEVAL)
-				System.out.println("JOTAROOOO\n");
-			switch(ident_block) {
-				case IDENT_SRETURN:
-					switch(ident_expr) {
-						case IDENT_EBINOP:
-							e = stack_addr_expr.pop();
-							System.out.println("before add "+ e);
-							e = new Ecall(n.f, new LinkedList<>());
-							stack_addr_expr.push(e);
-							
-							for(int i=0; i<taille; i++) {
-								Pexpr vars = n.l.get(i);
-								System.out.println("vars");
-								
-								if(vars instanceof Pbinop || vars instanceof Punop) {
-									if(vars instanceof Pbinop) stack_expr.push(IDENT_EBINOP);
-									else stack_expr.push(IDENT_EUNOP);
-									stack_block.push(IDENT_SRETURN);
-									this.visit(vars);
-									Expr ex = stack_addr_expr.pop();
-									((Ecall)e).el.add(ex);
-									stack_addr_expr.push(e);
-									stack_block.pop();
-									stack_expr.pop();
-		
-								}
-								
-								else {
-								stack_expr.add(IDENT_PCALL);
-								stack_block.add(IDENT_PEVAL);
-									this.visit(vars);
-									e = stack_addr_expr.pop();
-									Expr t = stack_addr_expr.pop();
-									((Ecall)t).el.add(e);
-									stack_addr_expr.push(t);
-									stack_block.pop();
-									stack_expr.pop();
-								}
-							}
-							System.out.println("after add "+ e);
-							break;
-						default:
-							throw new Error("visit Pcall ident_expr "+n.loc);
-						}
-					break;
-				case IDENT_PEVAL:
-					
-					e = stack_addr_expr.pop();
-					if(e instanceof Ecall) {
-						
-						stack_addr_expr.push(e);
-						Ecall ne = new Ecall(n.f, new LinkedList<>());
-						stack_addr_expr.push(ne);
-						
-						
-						for(int i=0; i<taille; i++) {
-							Pexpr vars = n.l.get(i);
-							System.out.println("vars");							
-							if(vars instanceof Pbinop || vars instanceof Punop) {
-								if(vars instanceof Pbinop) stack_expr.push(IDENT_EBINOP);
-								else stack_expr.push(IDENT_EUNOP);
-								stack_block.push(IDENT_SRETURN);
-								//System.out.println("NOPEEEEEEEEEEEEEEE " + stack_addr_expr.peek());
-								this.visit(vars);
-								
-								e = stack_addr_expr.pop();
-								Expr t = stack_addr_expr.pop();
-								((Ecall)t).el.add(e);
-								stack_addr_expr.push(t);
-								stack_block.pop();
-								stack_expr.pop();
-								
-							}
-							else {
-								stack_expr.add(IDENT_PCALL);
-								stack_block.add(IDENT_PEVAL);
-								this.visit(vars);
-								e = stack_addr_expr.pop();
-								Expr t = stack_addr_expr.pop();
-								((Ecall)t).el.add(e);
-								stack_addr_expr.push(t);
-								stack_block.pop();
-								stack_expr.pop();
-								
-							}
-						}
-						
-//						System.out.println("NOPEEEEEEEEEEEEEEE " + stack_addr_expr.pop());
-//						System.out.println("NOPEEEEEEEEEEEEEEE " + stack_addr_expr.pop());
-						/*
-						e = stack_addr_expr.pop();
-						Expr t = stack_addr_expr.pop();
-						((Ecall)t).el.add(e);
-						stack_addr_expr.push(t);
-						System.out.println("NOPEEEEEEEEEEEEEEE " + stack_addr_expr.peek());
-
-						System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-						*/
-					}
-					else {
-				
-						e = new Ecall(n.f, new LinkedList<>());
-						stack_addr_expr.push(e);
-						for(int i=0; i<taille; i++) {
-							Pexpr vars = n.l.get(i);
-							System.out.println("vars");
-							if(vars instanceof Pbinop || vars instanceof Punop) {
-								if(vars instanceof Pbinop) stack_expr.push(IDENT_EBINOP);
-								else stack_expr.push(IDENT_EUNOP);
-								stack_block.push(IDENT_SRETURN);
-								this.visit(vars);
-								Expr ex = stack_addr_expr.pop();
-								((Ecall)e).el.add(ex);
-								stack_addr_expr.push(e);
-								stack_block.pop();
-								stack_expr.pop();
-	
-							}
-							else {
-								stack_expr.add(IDENT_PCALL);
-								this.visit(vars);
-								e = stack_addr_expr.pop();
-								Expr t = stack_addr_expr.pop();
-								((Ecall)t).el.add(e);
-								stack_addr_expr.push(t);
-	
-							}
-							System.out.println(stack_addr_expr.size());
-	 /*						
-							System.out.println("NOPEEEEEEEEEEEEEEE " + stack_addr_expr.pop());
-							System.out.println("NOPEEEEEEEEEEEEEEE " + stack_addr_expr.pop());
-							System.out.println("NOPEEEEEEEEEEEEEEE " + stack_addr_expr.pop());
-	*/						
-		
-							/* Now verifier que les variables sont du bon type */
-						}
-					}
-					
-					break;
-				default:
-					throw new Error("Not yet...");
-			}
+			stack_block.pop();
+			stack_expr.pop();
 			System.out.println("Pcall Fin");
 		}
 	}
@@ -901,44 +682,13 @@ public class Typing implements Pvisitor {
 		this.visit(tmp);
 		((Sif)b.sl.getLast()).e = stack_addr_expr.pop() ; 
 		stack_addr_block.push(b); 
-		//System.out.println(((Sif)b.sl.getLast()).e); 
-		//stack_addr_block.push(n.s1);
-		System.out.println("Pif S1");
 		Sblock bb = new Sblock(new LinkedList<>(), new LinkedList<>()); 
-		//System.out.println("bb = "+bb); 
-		//stack_addr_block.push(bb); 
-		
-		
-		//bb = stack_addr_block.pop(); 
-		System.out.println("bb = "+bb); 
-		System.out.println("b = "+b); 
-		//stack_addr_block.push(bb);
-		stack_addr_stmt.push(null); 
-		System.out.println("nooooooooon... "+ stack_addr_stmt.size()); 
+		stack_addr_stmt.push(null);  
 		this.visit(n.s1);
-		System.out.println("ouiiiiiiii... "+ stack_addr_stmt.size()); 
-		//stack_addr_block.pop();
-		
 		((Sif)b.sl.getLast()).s1 = stack_addr_stmt.pop();
-		System.out.println("llllllll ");
-		
-		//System.out.println("llllllll " + stack_addr_stmt.pop());
-		/*
-		bb = new Sblock(new LinkedList<>(), new LinkedList<>()); 
-		stack_addr_block.push(bb); 
-		this.visit(n.s2); 
-		((Sif)b.sl.getLast()).s2 = stack_addr_block.pop();
-		*/
 		stack_addr_stmt.push(null);
-		System.out.println("nooooooooon... "+ stack_addr_stmt.size()); 
 		this.visit(n.s2);
-		System.out.println("ouiiiiiiii... "+ stack_addr_stmt.size()); 
-		//stack_addr_block.pop();
-		
 		((Sif)b.sl.getLast()).s2 = stack_addr_stmt.pop();
-		System.out.println("llllllll ");
-		
-		
 		System.out.println("Pif fin"); 
 	}
 
@@ -989,13 +739,7 @@ public class Typing implements Pvisitor {
 			this.visit(tmp);
 		}
 		System.out.println("Pbloc fin"); 
-		
-		//Sblock b = stack_addr_block.pop(); 
-		/*
-		System.out.println("bbbbb"); 
-		System.out.println(b.sl.getLast());
-		*/
-		//b.sl.add(bb);
+	
 		Stmt s = stack_addr_stmt.pop(); 
 		s = stack_addr_block.pop();
 		stack_addr_stmt.push(s); 
@@ -1011,18 +755,13 @@ public class Typing implements Pvisitor {
 		//System.out.println("oui "+ stack_block.peek());
 		Pexpr tmp = n.e; 
 		
-		//
-		
-		
-		System.out.println("size: "+  stack_addr_block.size());
+
 		Sblock b = stack_addr_block.pop(); 
 		//b.sl.add(new Sreturn(null)); 
 		stack_addr_block.push(b); 
 		// A revoir
 		Expr e = null; 
 		stack_addr_expr.push(e);
-		if(tmp instanceof Pbinop)
-			System.out.println("YBINOPEEEEEEEEEEEEEEEES\n\n\n");
 		this.visit(tmp);
 		
 		b.sl.add(new Sreturn(stack_addr_expr.pop())) ; 
