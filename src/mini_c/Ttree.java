@@ -74,6 +74,9 @@ class Structure {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	public String toString() {
+		return this.str_name +":"+this.fields;
+	}
 }
 
 class Field {
@@ -88,6 +91,9 @@ class Field {
 
 	void accept(Visitor v) {
 		v.visit(this);
+	}
+	public String toString() {
+		return this.field_name +":"+this.field_typ;
 	}
 }
 
@@ -168,7 +174,7 @@ class Eaccess_field extends Expr {
 	}
 	//US
 	public String toString() {
-				return "Eaccess_field: "+this.e; 
+		return "Eaccess_field: " + this.e + " " + this.f; 
 	}
 	//
 }
@@ -209,7 +215,7 @@ class Eassign_field extends Expr {
 	}
 	//US
 	public String toString() {
-		return "Eassign_field: "+this.e1 +" "+this.e2; 
+		return "Eassign_field: "+this.e1 + " -> " + this.f + " = "+this.e2; 
 	}
 //
 }
@@ -228,7 +234,7 @@ class Eunop extends Expr {
 	}
 	//US
 		public String toString() {
-	return "Eunop: "+this.e; 
+	return "Eunop: "+ this.u + " " + this.e; 
 		}
 		//
 }
@@ -266,6 +272,9 @@ class Ecall extends Expr {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	public String toString() {
+		return "(Ecall: "+this.i +" "+ this.el+")"; 
+	}
 }
 
 class Esizeof extends Expr {
@@ -277,6 +286,9 @@ class Esizeof extends Expr {
 
 	void accept(Visitor v) {
 		v.visit(this);
+	}
+	public String toString() {
+		return "(Esizeof: " + this.s.str_name + ")"; 
 	}
 }
 
@@ -293,6 +305,9 @@ class Sskip extends Stmt {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	public String toString() {
+		return "Sskip"; 
+	}
 }
 
 class Sexpr extends Stmt {
@@ -304,6 +319,9 @@ class Sexpr extends Stmt {
 
 	void accept(Visitor v) {
 		v.visit(this);
+	}
+	public String toString() {
+		return "Sexpr: "+ this.e; 
 	}
 }
 
@@ -339,6 +357,10 @@ class Swhile extends Stmt {
 	void accept(Visitor v) {
 		v.visit(this);
 	}
+	public String toString() {
+		return "(Swhile: "+this.e + " "+ this.s+")"; 
+	}
+
 }
 
 class Sblock extends Stmt {
@@ -380,6 +402,9 @@ class Sreturn extends Stmt {
 
 	void accept(Visitor v) {
 		v.visit(this);
+	}
+	public String toString() {
+		return "Sreturn: " + this.e; 
 	}
 }
 
@@ -437,10 +462,17 @@ class File {
         				res+="Sreturn : "+((Sreturn)sl).e+"\n"; 
         			}
         			else if(sl instanceof Sif) {
-        				res+="Sif: "+((Sif)sl).e+"\n"; 
-        				res+="S1: "+((Sif)sl).s1+"\n"; 
+        				res+="\nSif: "+((Sif)sl).e+"\n"; 
+        				res+="\nS1: "+((Sif)sl).s1+"\n"; 
         				res+="S2: "+((Sif)sl).s2+"\n"; 
-        				res+= "Fin Si\n";
+        				res+= "Fin Sif\n";
+        			}
+        			else if(sl instanceof Sexpr) {
+        				if(((Sexpr)sl).e instanceof Ecall) {
+        					res+="Ecall: "+((Ecall)((Sexpr)sl).e).i+ " " + ((Ecall)((Sexpr)sl).e).el +"\n";
+        				}
+        				else
+        					res+="Sexpr: "+((Sexpr)sl).e+"\n";
         			}
         			
         			else {
