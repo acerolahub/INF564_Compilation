@@ -2,7 +2,6 @@ package mini_c;
 
 import java.util.EmptyStackException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -13,23 +12,13 @@ public class Typing implements Pvisitor {
 	
 	private int nb_args; 
 	private int cursor = 0;
-	/*
-	enum Block{
-		IDENT_DECL, IDENT_PBLOC, IDENT_SRETURN, IDENT_SIF, IDENT_PEVAL;
-	}
-	enum Expression{
-		IDENT_ECONST, IDENT_EACCES_LOCAL, IDENT_EACCES_FIELDS, IDENT_EASSIGN_LOCAL,	IDENT_EASSIGN_FIELD, IDENT_EUNOP, IDENT_EBINOP, IDENT_ECALL, IDENT_ESIZEOF, IDENT_PARROW, IDENT_PASSIGN;
-	}*/
-	final private static int IDENT_DECL= 0, IDENT_PBLOC = 1, IDENT_SRETURN = 2, IDENT_SIF = 3, IDENT_PEVAL = 4, IDENT_SWHILE = 5;
+	
+	final private static int IDENT_DECL= 0, IDENT_SRETURN = 2, IDENT_SIF = 3, IDENT_PEVAL = 4, IDENT_SWHILE = 5;
 	private int ident_block = 0;
 	 
-	final private static int IDENT_ECONST=0, IDENT_EACCES_LOCAL=1, IDENT_EACCES_FIELDS=2, IDENT_EASSIGN_LOCAL = 3, 
-			IDENT_EASSIGN_FIELD = 4, IDENT_EUNOP = 5, IDENT_EBINOP = 6, IDENT_ECALL = 7, IDENT_ESIZEOF = 8, IDENT_PARROW=9, IDENT_PASSIGN=10; 
+	final private static int IDENT_EUNOP = 5, IDENT_EBINOP = 6, IDENT_ECALL = 7,  IDENT_PASSIGN=10; 
 	
-	final private static int STRUCT_NAME=1, STRUCT_VARNAME=2, STRUCT_FIELD=3, STRUCT_DECL=4;
-	private int ident_expr = 0; 
-	private int cursor_binop=0; 
-	private int cursor_assign=0; 
+	final private static int STRUCT_NAME=1, STRUCT_VARNAME=2, STRUCT_FIELD=3;
 	
 	private String NAME_FIELD;
 	private Typ TYP_FIELD;
@@ -49,7 +38,7 @@ public class Typing implements Pvisitor {
 	
 	public int nb_main = 0;
 	
-	public int func = 0;
+	
 	
 	public String type_field;
 	
@@ -76,7 +65,6 @@ public class Typing implements Pvisitor {
 	@Override
 	public void visit(Pfile n) {
 		// TODO Auto-generated method stub
-		//LinkedList<Pdecl> l = n.l;
 		file = new File(new LinkedList<Decl_fun>());
 		stack_struct.add(0);
 		structure = new HashMap<>();
@@ -127,7 +115,6 @@ public class Typing implements Pvisitor {
 					ident_block = stack_block.peek();  
 					
 					switch(ident_block) {
-					
 						case IDENT_DECL:
 							for(Decl_var var : b.dl) {
 								if(var.name != null && var.name.equals(n.id)) {
@@ -136,18 +123,13 @@ public class Typing implements Pvisitor {
 							}
 							b.dl.getLast().name = n.id;
 							TYP_FIELD = b.dl.getLast().t;
-							
 							break; 
 						default:
-							
 							int present = 0;
 							for(int i=stack_addr_block.size()-1; i>=0; i--) {
-								
 								Sblock blc = stack_addr_block.get(i);
-								
 								if(blc==null)
 									break;
-								
 								for(Decl_var var : blc.dl) {
 									if(var.name.equals(n.id)) {
 										present = 1;
@@ -169,8 +151,6 @@ public class Typing implements Pvisitor {
 							if(present==0)
 								throw new Error("unknown variable at " + n.loc);
 							stack_addr_expr.add(new Eaccess_local(n.id));
-							
-							
 					}
 				}
 			}
@@ -202,7 +182,7 @@ public class Typing implements Pvisitor {
 	public void visit(PTint n) {
 		// TODO Auto-generated method stub
 		
-		System.out.println("Ptint deb "+func); 
+		System.out.println("Ptint deb "); 
 		if(stack_struct.peek()==0) {
 			if(cursor==0)
 				file.funs.add(new Decl_fun(new Tint(), null, null, null));
@@ -210,7 +190,6 @@ public class Typing implements Pvisitor {
 				file.funs.getLast().fun_formals.add(new Decl_var(new Tint(), null)); 
 			}
 			else {
-
 				Sblock b = stack_addr_block.pop();  
 				b.dl.add(new Decl_var(new Tint(), null)); 
 				stack_addr_block.push(b); 
@@ -226,21 +205,6 @@ public class Typing implements Pvisitor {
 	public void visit(PTstruct n) {
 		// TODO Auto-generated method stub
 		System.out.println("Deb PTstruct");
-		/*
-		if(stack_struct.peek()==STRUCT_VARNAME) {			
-			name_struct = n.id;
-			Sblock b = stack_addr_block.pop(); 
-			System.out.println("b = "+b); 
-			Structure s=null;
-			
-			s = structure.get(name_struct); 
-			b.dl.add(new Decl_var(new Tstructp(s), null));
-			stack_addr_block.push(b);
-		}
-		else {
-			System.out.println("Nope");
-		}
-		*/
 		Structure s; 
 		if(stack_struct.peek()==0) {
 			if(cursor==0) {
@@ -258,16 +222,12 @@ public class Typing implements Pvisitor {
 					file.funs.getLast().fun_formals.add(new Decl_var(new Tstructp(s), null)); 
 			}
 			else {
-				 
 				Sblock b = stack_addr_block.pop(); 
-				 
 				b.dl.add(new Decl_var(new Tstructp( structure.get(n.id)), null)); 
 				stack_addr_block.push(b); 
 			}
 		}
 		else if(stack_struct.peek()==STRUCT_FIELD) {
-
-			//structure.getLast().fields.put(null, new Field(null, new Tint()));
 			if(structure.get(n.id)==null)
 				throw new Error("structure not defined at location " + n.loc);
 			type_field = n.id;
@@ -287,96 +247,32 @@ public class Typing implements Pvisitor {
 	@Override
 	public void visit(Punop n) {
 		// TODO Auto-generated method stub
-	//unop = 1; 
-	//int prev = ident_expr; 
-	System.out.println("Eunop Deb"); 
-	Sblock temp = stack_addr_block.peek();
-
-	if(temp != null) {
-		if(n.e1 instanceof Pident) {
-			for(Decl_var var : temp.dl) {
-				if(var.t instanceof Tstructp && var.name.equals(((Pident)n.e1).id) && n.op.toString().equals("Uneg"))
-					throw new Error("incompatible type operation at location " + n.loc);
+ 
+		System.out.println("Eunop Deb"); 
+		Sblock temp = stack_addr_block.peek();
+	
+		if(temp != null) {
+			if(n.e1 instanceof Pident) {
+				for(Decl_var var : temp.dl) {
+					if(var.t instanceof Tstructp && var.name.equals(((Pident)n.e1).id) && n.op.toString().equals("Uneg"))
+						throw new Error("incompatible type operation at location " + n.loc);
+				}
 			}
 		}
-	}
-	else		
-		throw new Error("incompatible type");
-	try {
-		ident_expr = stack_expr.peek();
-	}
-	catch(EmptyStackException e) {
-		ident_expr = IDENT_EUNOP;
-	}
-	stack_expr.push(IDENT_EUNOP);
-	ident_block = stack_block.peek();
-	Expr e; 
-	switch(ident_block)	{
-		case IDENT_SRETURN: 
-			switch(ident_expr) {
-			case IDENT_EBINOP:
-				e = new Eunop(n.op, null); 
-				stack_addr_expr.push(e);
-				this.visit(n.e1);
-				
-				break;
-			case IDENT_EUNOP:
-				e = new Eunop(n.op, null); 
-				stack_addr_expr.push(e);
-				this.visit(n.e1);
-				((Eunop)e).e = stack_addr_expr.pop();
-				break;
-			case IDENT_ECALL:
-				e = new Eunop(n.op, null); 
-				stack_addr_expr.push(e);
-				this.visit(n.e1);
-				((Eunop)e).e = stack_addr_expr.pop();
-				break;
-			default:
-				throw new Error("visit Punop "+n.loc);
-			
-		}
-			break;
-		case IDENT_PEVAL:
-			switch(ident_expr) {
-				case IDENT_EBINOP:
-					e = new Eunop(n.op, null); 
-					stack_addr_expr.push(e);
-					
-					this.visit(n.e1);
-					
-					((Eunop)e).e = stack_addr_expr.pop();
-					
-					
-					break;
-				case IDENT_EUNOP:
-					e = new Eunop(n.op, null); 
-					stack_addr_expr.push(e);
-					this.visit(n.e1);
-					((Eunop)e).e = stack_addr_expr.pop();
-					break;
-				case IDENT_ECALL:
-					e = new Eunop(n.op, null); 
-					stack_addr_expr.push(e);
-					this.visit(n.e1);
-					((Eunop)e).e = stack_addr_expr.pop();
-					break;
-				default:
-					throw new Error("visit Punop "+n.loc);
-			}	
-			break;
-		case IDENT_SIF:
-			e = new Eunop(n.op, null); 
-			stack_addr_expr.push(e);
-			this.visit(n.e1);
-			((Eunop)e).e = stack_addr_expr.pop();
-			break;
-		default:
-			throw new Error("visit Punop "+n.loc);
-	}
-	
-	stack_expr.pop(); 
-	System.out.println("Eunop Fin");
+		else		
+			throw new Error("incompatible type");
+		
+		
+		stack_expr.push(IDENT_EUNOP);
+		ident_block = stack_block.peek();
+		
+		Expr e = new Eunop(n.op, null); 
+		stack_addr_expr.push(e);
+		this.visit(n.e1);
+		((Eunop)e).e = stack_addr_expr.pop();
+		
+		stack_expr.pop(); 
+		System.out.println("Eunop Fin");
 	
 	}
 
@@ -476,9 +372,8 @@ public class Typing implements Pvisitor {
 		stack_expr.push(IDENT_EBINOP);
 		ident_block = stack_block.peek();
 				
-		cursor_binop = 0;
-		this.visit(n.e1);
 		
+		this.visit(n.e1);
 		if(TYP_FIELD instanceof Tint)
 			t1 = new Tint();
 		else if(TYP_FIELD instanceof Tstructp)
@@ -486,7 +381,6 @@ public class Typing implements Pvisitor {
 		((Ebinop)e).e1 = stack_addr_expr.pop(); 
 		
 		
-		cursor_binop = 1; 
 		this.visit(n.e2);
 		if(TYP_FIELD instanceof Tint)
 			t2 = new Tint();
@@ -494,7 +388,6 @@ public class Typing implements Pvisitor {
 			t2 = new Tstructp(structure.get(((Tstructp)TYP_FIELD).s.str_name));
 		((Ebinop)e).e2 = stack_addr_expr.pop();
 		
-		//System.out.println(t1 + " " + t2);
 		
 		if(t1 instanceof Tint && t2 instanceof Tstructp)
 			throw new Error("incompatible type operation at location " + n.loc);
@@ -660,17 +553,8 @@ public class Typing implements Pvisitor {
 	@Override
 	public void visit(Pskip n) {
 		// TODO Auto-generated method stub
-		
 		System.out.println("Pskip Deb");
-		
-		//Sblock b = stack_addr_block.pop();
-		
-		//int temp = stack_block.peek();
-		
-			//Sblock b = new Sblock(new LinkedList<Decl_var>(), new LinkedList<Stmt>()); 
-			//b.sl.add(new Sskip());
 		stack_addr_stmt.push(new Sskip());
-		
 		System.out.println("Pskip Fin");
 	}
 
@@ -679,18 +563,16 @@ public class Typing implements Pvisitor {
 		// TODO Auto-generated method stub
 		System.out.println("Peval Deb");
 		stack_block.push(IDENT_PEVAL);
+		
 		Pexpr tmp = n.e; 
-		//Sblock b = stack_addr_block.pop(); 
-		//stack_addr_block.push(b);
+
 		Expr e = null; 
 		stack_addr_expr.push(e);
 		this.visit(tmp);
 		
 		stack_addr_stmt.add(new Sexpr(stack_addr_expr.pop())) ; 
-		//stack_addr_block.push(b);
 		
 		stack_block.pop();
-		
 		System.out.println("Peval Fin");
 	}
 
@@ -716,7 +598,6 @@ public class Typing implements Pvisitor {
 		
 		if(n.s1 instanceof Pbloc) {
 			this.visit(n.s1);
-			
 			b.s1 = stack_addr_block.pop();
 			if(nb_pblocs==1 && !((Sblock)b.s1).sl.isEmpty() && ((Sblock)b.s1).sl.getLast() instanceof Sreturn) nb_return++;
 		}
@@ -724,11 +605,7 @@ public class Typing implements Pvisitor {
 			this.visit(n.s1);
 			b.s1 = stack_addr_stmt.pop();
 			if(nb_pblocs==1 && b.s1 instanceof Sreturn) nb_return++;
-			
 		}
-		
-		
-		
 		
 		if(n.s2 instanceof Pbloc) {
 			this.visit(n.s2);
@@ -736,22 +613,14 @@ public class Typing implements Pvisitor {
 			if(nb_pblocs==1 && !((Sblock)b.s2).sl.isEmpty() && ((Sblock)b.s2).sl.getLast() instanceof Sreturn) nb_return++;
 		}
 		else{
-			//Sblock bb = new Sblock(new LinkedList<>(), new LinkedList<>());
-			//stack_addr_block.push(bb);
 			this.visit(n.s2);
 			b.s2 = stack_addr_stmt.pop();
 			if(nb_pblocs==1 && b.s2 instanceof Sreturn) nb_return++;
 		}
 		
-		//System.out.println("\n\n\nB=");
-		//System.out.println(((Sif)b.sl.getLast()));
 		
 		if (nb_return == 2) 
-		{
-			
 			FIN_FCT=1;
-		}
-		
 		
 		stack_addr_stmt.push(b);
 		stack_block.pop();
@@ -762,69 +631,50 @@ public class Typing implements Pvisitor {
 	public void visit(Pwhile n) {
 		// TODO Auto-generated method stub
 		System.out.println("Pwhile Deb");
-		 
 		stack_block.push(IDENT_SWHILE);
 		
-		Pexpr tmp = n.e; 
-		
-		//Sblock b = stack_addr_block.pop(); 
-		
 		Swhile b = new Swhile(null, null); 
-		
 		stack_addr_expr.push(null); 
-		//stack_addr_block.push(b); 
-		this.visit(tmp);
-		
+		this.visit(n.e);
 		b.e = stack_addr_expr.pop() ; 
-		 
-		
-		if(n.s1 instanceof Pbloc) {
-			this.visit(n.s1);
-			b.s = stack_addr_block.pop();
-		}
-		else{
-			this.visit(n.s1);
-			b.s = stack_addr_stmt.pop();
 			
-		}
-		
+		this.visit(n.s1);
+		if(n.s1 instanceof Pbloc)			
+			b.s = stack_addr_block.pop();
+		else
+			b.s = stack_addr_stmt.pop();
 		
 		stack_addr_stmt.push(b);
+
 		stack_block.pop();
 		System.out.println("Pwhile Fin");
-		
 	}
 
 	@Override
 	public void visit(Pbloc n) {
 		// TODO Auto-generated method stub
-		
 		System.out.println("Pbloc deb");
 		nb_pblocs++;
 		
-		int temp=-1;
+		int temp;
 		try {
 			temp = stack_block.peek();
 		}
 		catch(EmptyStackException e){
-			
+			temp=-1;
 		}
 		stack_block.push(IDENT_DECL);
 
 		Sblock b = new Sblock(new LinkedList<Decl_var>(), new LinkedList<Stmt>()); 
 		stack_addr_block.push(b);
-		
-			
+					
 		for(Pdeclvar tmp: n.vl) {
-			if(tmp.typ instanceof PTint) {
+			if(tmp.typ instanceof PTint)
 				this.visit((PTint)tmp.typ );
-			}
-			else if(tmp.typ instanceof PTstruct) {
+			else if(tmp.typ instanceof PTstruct)
 				this.visit((PTstruct)tmp.typ );
-			} 
-			else {
+			else
 				throw new Error("visit Pfun Pdeclvar "+tmp.loc); 
-			}
 			this.visit(new Pident(new Pstring(tmp.id, tmp.loc)));
 		} 
 		stack_block.pop();
@@ -837,7 +687,6 @@ public class Typing implements Pvisitor {
 			if(rreturn==0) {
 				if(tmp instanceof Preturn) {
 					rreturn = 1;
-					//System.out.println(temp + " " + IDENT_SIF);
 					if(nb_pblocs==1 && temp != IDENT_SIF && temp != IDENT_SWHILE) FIN_FCT=1;
 				}
 				this.visit(tmp);
@@ -862,32 +711,29 @@ public class Typing implements Pvisitor {
 	public void visit(Preturn n) {
 		// TODO Auto-generated method stub
 		System.out.println("Preturn deb"); 
-
-		stack_block.push(IDENT_SRETURN);
-
-		Pexpr tmp = n.e; 
+		stack_block.push(IDENT_SRETURN); 
 		
-		// A revoir
-		Expr e = null; 
-		stack_addr_expr.push(e);
-		this.visit(tmp);
-		
-		stack_addr_stmt.add(new Sreturn(stack_addr_expr.pop())) ; 
+		stack_addr_expr.push(null);
+		this.visit(n.e);
+		stack_addr_stmt.add(new Sreturn(stack_addr_expr.pop())); 
+
 		stack_block.pop();
-		System.out.println("Preturn fin"); 
-
+		System.out.println("Preturn fin");
 	}
 
 	@Override
 	public void visit(Pstruct n) {
 		// TODO Auto-generated method stub
 		System.out.println("Pstruct Deb");
+		
 		stack_struct.add(STRUCT_NAME);
 		this.visit(new Pident(new Pstring(n.s, n.fl.getFirst().loc)));
 		stack_struct.pop();
+		
 		for(Pdeclvar tmp : n.fl) {
 			type_field="0";
 			stack_struct.add(STRUCT_FIELD);
+			
 			if (tmp.typ instanceof PTint) {
 				this.visit((PTint)tmp.typ);
 			} else if (tmp.typ instanceof PTstruct) {
@@ -895,11 +741,10 @@ public class Typing implements Pvisitor {
 			} else {
 				throw new Error("visit Pfun Ptype "+tmp.loc);
 			}
-			
-			
 			this.visit(new Pident(new Pstring(tmp.id, tmp.loc)));
 			stack_struct.pop();
 		}
+		
 		System.out.println("Pstruct Fin");
 	}
 
@@ -908,9 +753,9 @@ public class Typing implements Pvisitor {
 		// TODO Auto-generated method stub
 		FIN_FCT=0;
 		nb_pblocs=0;
-		func=1;
 		Ptype ty = n.ty;
-		nb_args = n.pl.size(); 
+		nb_args = n.pl.size();
+		
 		if (ty instanceof PTint) {
 			this.visit((PTint)ty);
 		} else if (ty instanceof PTstruct) {
@@ -920,28 +765,23 @@ public class Typing implements Pvisitor {
 		}
 		this.visit(new Pident(new Pstring(n.s, n.loc)));
 		
-		
 		cursor = 1;
 		file.funs.getLast().fun_formals = new LinkedList<>(); 
-		
 		for (Pdeclvar tmp : n.pl) {
-			
 			if(tmp.typ instanceof PTint) {
 				this.visit((PTint)tmp.typ );
 				this.visit(new Pident(new Pstring(tmp.id, tmp.loc)));
 			}
 			else if(tmp.typ instanceof PTstruct) {
-				
 				this.visit((PTstruct)tmp.typ );
 				this.visit(new Pident(new Pstring(tmp.id, tmp.loc)));
-				
 			} 
 			else {
 				throw new Error("visit Pfun Pdeclvar "+tmp.loc); 
 			}
 			cursor++; 
 		}
-		func=1; 
+		 
 		stack_addr_stmt.push(null); 
 		this.visit(n.b);
 		try {
@@ -961,16 +801,10 @@ public class Typing implements Pvisitor {
 		// TODO Auto-generated method stub	
 		if(tmp instanceof Pint)
 			this.visit((Pint)tmp);
-		else if (tmp instanceof Pident) {
-			
+		else if (tmp instanceof Pident)
 			this.visit((Pident)tmp);
-		}
-			
-		else if (tmp instanceof Parrow) {
-			
+		else if (tmp instanceof Parrow)
 			this.visit((Parrow)tmp);
-		}
-			
 		else if (tmp instanceof Plvalue)
 			this.visit((Plvalue)tmp);
 		else if (tmp instanceof Passign)
@@ -988,7 +822,6 @@ public class Typing implements Pvisitor {
 
 	public void visit(Pstmt tmp) {
 		// TODO Auto-generated method stub	
-		 
 		if(tmp instanceof Pbloc)
 			this.visit((Pbloc)tmp);
 		else if(tmp instanceof Pskip)
@@ -1001,7 +834,7 @@ public class Typing implements Pvisitor {
 			this.visit((Peval)tmp);
 		else if(tmp instanceof Pwhile)
 			this.visit((Pwhile)tmp);
-		else{
-			throw new Error("Visit Pstmt "+tmp.loc);} 
+		else
+			throw new Error("Visit Pstmt "+tmp.loc); 
 	} 	
 }
