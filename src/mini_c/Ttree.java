@@ -445,8 +445,8 @@ class File {
 		String res = "Number of functions " + this.funs.size() + "\n"; 
 		
         for(Decl_fun d: this.funs) {
-        	res += "fun_type: "+d.fun_typ+"\n" ; 
-        	res+="fun_name: "+d.fun_name+"\n" ; 
+        	res += "\n\n\n\t\t\t";
+        	res += d.fun_typ+":" +d.fun_name+"\n" ; 
         	for (Decl_var dd: d.fun_formals){
         		res+="var_type, var_name: "+dd.t + ", "+dd.name+"\n" ; 
         	}
@@ -474,7 +474,17 @@ class File {
         				else
         					res+="Sexpr: "+((Sexpr)sl).e+"\n";
         			}
-        			
+        			else if(sl instanceof Sskip) {
+        				res+="Sskip\n";
+        			}
+        			else if(sl instanceof Swhile) {
+        				res+="\nSwhile: "+((Swhile)sl).e+"\n"; 
+        				res+="\nS: "+((Swhile)sl).s+"\n";  
+        				res+= "Fin Swhile\n";
+        			}
+        			else if(sl instanceof Sblock) {
+        				res+="\n"+sl+"\n";
+        			}
         			else {
         				res+="sl not instance of Sretrun or Sif"+"\n"; 
         			}
