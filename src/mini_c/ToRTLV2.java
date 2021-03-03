@@ -72,7 +72,7 @@ class ToRTL extends EmptyVisitor{
 		 fun = tmp; 
 		 first_event = false; 
 		 tmp.exit = new Label(); 
-		 tmp.entry = last_result; 
+		 //tmp.entry = last_result; 
 		 
 		 
 		 Register r; 
@@ -88,7 +88,7 @@ class ToRTL extends EmptyVisitor{
 		 
 		 
 		 this.visit(d.fun_body); 
-		 //tmp.entry = last_result; 
+		 tmp.entry = last_result; 
 		 //System.out.println("grap "+ tmp.body.graph.size()); 
 		 tmp.body = current_graph; 
 		 rtlfile.funs.add(tmp); 
