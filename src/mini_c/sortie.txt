@@ -1,0 +1,271 @@
+ECHEC du compilateur sur exec/abr.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/and1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/and2.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/arith1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/assign1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/assign2.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/assign3.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.ClassCastException: class mini_c.Eaccess_field cannot be cast to class mini_c.Eaccess_local (mini_c.Eaccess_field and mini_c.Eaccess_local are in unnamed module of loader 'app')
+	at mini_c.ToRTL.visit(ToRTL.java:604)
+	at mini_c.ToRTL.visit(ToRTL.java:288)
+	at mini_c.ToRTL.visit(ToRTL.java:816)
+	at mini_c.ToRTL.visit(ToRTL.java:285)
+	at mini_c.ToRTL.visit(ToRTL.java:864)
+	at mini_c.ToRTL.visit(ToRTL.java:106)
+	at mini_c.ToRTL.visit(ToRTL.java:195)
+	at mini_c.ToRTL.visit(ToRTL.java:113)
+	at mini_c.ToRTL.visit(ToRTL.java:90)
+	at mini_c.ToRTL.visit(ToRTL.java:61)
+	at mini_c.ToRTL.translate(ToRTL.java:53)
+	at mini_c.Main.main(Main.java:46)
+
+ECHEC du compilateur sur exec/assign6.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.ClassCastException: class mini_c.Eaccess_field cannot be cast to class mini_c.Eaccess_local (mini_c.Eaccess_field and mini_c.Eaccess_local are in unnamed module of loader 'app')
+	at mini_c.ToRTL.visit(ToRTL.java:604)
+	at mini_c.ToRTL.visit(ToRTL.java:288)
+	at mini_c.ToRTL.visit(ToRTL.java:816)
+	at mini_c.ToRTL.visit(ToRTL.java:285)
+	at mini_c.ToRTL.visit(ToRTL.java:864)
+	at mini_c.ToRTL.visit(ToRTL.java:106)
+	at mini_c.ToRTL.visit(ToRTL.java:195)
+	at mini_c.ToRTL.visit(ToRTL.java:113)
+	at mini_c.ToRTL.visit(ToRTL.java:90)
+	at mini_c.ToRTL.visit(ToRTL.java:61)
+	at mini_c.ToRTL.translate(ToRTL.java:53)
+	at mini_c.Main.main(Main.java:46)
+
+ECHEC du compilateur sur exec/assign7.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/block1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/block2.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/call1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/call2.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/char1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/char2.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/char3.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/char4.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.ClassCastException: class mini_c.Eaccess_field cannot be cast to class mini_c.Eaccess_local (mini_c.Eaccess_field and mini_c.Eaccess_local are in unnamed module of loader 'app')
+	at mini_c.ToRTL.visit(ToRTL.java:693)
+	at mini_c.ToRTL.visit(ToRTL.java:291)
+	at mini_c.ToRTL.visit(ToRTL.java:864)
+	at mini_c.ToRTL.visit(ToRTL.java:106)
+	at mini_c.ToRTL.visit(ToRTL.java:195)
+	at mini_c.ToRTL.visit(ToRTL.java:113)
+	at mini_c.ToRTL.visit(ToRTL.java:90)
+	at mini_c.ToRTL.visit(ToRTL.java:61)
+	at mini_c.ToRTL.translate(ToRTL.java:53)
+	at mini_c.Main.main(Main.java:46)
+
+ECHEC du compilateur sur exec/dllist.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/fact.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+^C
+ECHEC du compilateur sur exec/fact_imp.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/fact_rec.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.Error: malloc: invalid argument
+	at mini_c.Memory.malloc(Memory.java:20)
+	at mini_c.RTLinterp.visit(RTLinterp.java:142)
+	at mini_c.Rcall.accept(RTL.java:133)
+	at mini_c.RTLinterp.call(RTLinterp.java:40)
+	at mini_c.RTLinterp.<init>(RTLinterp.java:23)
+	at mini_c.Main.main(Main.java:48)
+
+ECHEC du compilateur sur exec/field2.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.Error: malloc: invalid argument
+	at mini_c.Memory.malloc(Memory.java:20)
+	at mini_c.RTLinterp.visit(RTLinterp.java:142)
+	at mini_c.Rcall.accept(RTL.java:133)
+	at mini_c.RTLinterp.call(RTLinterp.java:40)
+	at mini_c.RTLinterp.<init>(RTLinterp.java:23)
+	at mini_c.Main.main(Main.java:48)
+
+ECHEC du compilateur sur exec/field4.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.Error: malloc: invalid argument
+	at mini_c.Memory.malloc(Memory.java:20)
+	at mini_c.RTLinterp.visit(RTLinterp.java:142)
+	at mini_c.Rcall.accept(RTL.java:133)
+	at mini_c.RTLinterp.call(RTLinterp.java:40)
+	at mini_c.RTLinterp.<init>(RTLinterp.java:23)
+	at mini_c.Main.main(Main.java:48)
+
+ECHEC du compilateur sur exec/field7.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.Error: malloc: invalid argument
+	at mini_c.Memory.malloc(Memory.java:20)
+	at mini_c.RTLinterp.visit(RTLinterp.java:142)
+	at mini_c.Rcall.accept(RTL.java:133)
+	at mini_c.RTLinterp.call(RTLinterp.java:40)
+	at mini_c.RTLinterp.<init>(RTLinterp.java:23)
+	at mini_c.Main.main(Main.java:48)
+
+ECHEC du compilateur sur exec/field8.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+^C
+ECHEC du compilateur sur exec/for1.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+^C
+ECHEC du compilateur sur exec/for2.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/for3.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/for4.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/for5.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/for6.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/hello_world.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.Error: unknown register #21
+	at mini_c.RTLinterp.get(RTLinterp.java:54)
+	at mini_c.RTLinterp.visit(RTLinterp.java:117)
+	at mini_c.Rmubranch.accept(RTL.java:101)
+	at mini_c.RTLinterp.call(RTLinterp.java:40)
+	at mini_c.RTLinterp.<init>(RTLinterp.java:23)
+	at mini_c.Main.main(Main.java:48)
+
+ECHEC du compilateur sur exec/if1.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/init1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.ClassCastException: class mini_c.Eaccess_field cannot be cast to class mini_c.Eaccess_local (mini_c.Eaccess_field and mini_c.Eaccess_local are in unnamed module of loader 'app')
+	at mini_c.ToRTL.visit(ToRTL.java:693)
+	at mini_c.ToRTL.visit(ToRTL.java:291)
+	at mini_c.ToRTL.visit(ToRTL.java:864)
+	at mini_c.ToRTL.visit(ToRTL.java:106)
+	at mini_c.ToRTL.visit(ToRTL.java:195)
+	at mini_c.ToRTL.visit(ToRTL.java:113)
+	at mini_c.ToRTL.visit(ToRTL.java:90)
+	at mini_c.ToRTL.visit(ToRTL.java:61)
+	at mini_c.ToRTL.translate(ToRTL.java:53)
+	at mini_c.Main.main(Main.java:46)
+
+ECHEC du compilateur sur exec/josephus.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.Error: no RTL instruction at label L16
+	at mini_c.RTLinterp.call(RTLinterp.java:39)
+	at mini_c.RTLinterp.visit(RTLinterp.java:150)
+	at mini_c.Rcall.accept(RTL.java:133)
+	at mini_c.RTLinterp.call(RTLinterp.java:40)
+	at mini_c.RTLinterp.<init>(RTLinterp.java:23)
+	at mini_c.Main.main(Main.java:48)
+
+ECHEC du compilateur sur exec/lazy1.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/local1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/local2.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/local3.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/mandelbrot.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/many.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/not1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/not2.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/or1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.Error: seg fault
+	at mini_c.Memory.seg_fault(Memory.java:34)
+	at mini_c.Memory.get(Memory.java:38)
+	
+
+ECHEC du compilateur sur exec/pascal.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+Exception in thread "main" java.lang.StackOverflowError
+	at mini_c.RTLinterp.get(RTLinterp.java:54)
+
+ECHEC du compilateur sur exec/print_int.c (devrait r�ussir)
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/putchar1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/putchar_hexa1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/putchar-octal1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/return1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/return2.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/shadow1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/sizeof2.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/spilled1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/uminus1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/while1.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/while2.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/while3.c
+.Picked up _JAVA_OPTIONS: -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true
+
+ECHEC : mauvaise sortie pour exec/while4.c
