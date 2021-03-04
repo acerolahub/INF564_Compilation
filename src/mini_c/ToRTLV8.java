@@ -889,16 +889,17 @@ class ToRTL extends EmptyVisitor{
 				}
 				if(tmp.b == Binop.Ble || tmp.b == Binop.Blt) {
 					Label LL3 = new Label(); 
-					Label LL2 = new Label(); 
+					Label LL2; 
 					Register rr2 = new Register(); 
 					Register rr1 = new Register(); 
+					stack_lab.push(LL3); 
+					stack_reg.push(rr2); 
+					this.visit(tmp.e2);
+					LL2 = last_result;
 					stack_lab.push(LL2); 
 					stack_reg.push(rr1); 
 					this.visit(tmp.e1);
 					Label LL1 = last_result; 
-					stack_lab.push(LL3); 
-					stack_reg.push(rr2); 
-					this.visit(tmp.e2);
 					Mbbranch m ; 
 					if(tmp.b == Binop.Ble)
 						m = Mbbranch.Mjle; 
